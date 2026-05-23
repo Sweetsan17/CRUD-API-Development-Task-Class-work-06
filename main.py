@@ -96,7 +96,6 @@ def get_students():
                 "email": student.email,
                 "age": student.age,
                 "cgpa": student.cgpa,
-                "is_active": student.is_active,
                 "joined_date": student.joined_date,
             }
         )
