@@ -76,5 +76,5 @@ if __name__ == "__Main__":
             db.create_all()
     except Exception as error:
         print("ERROR: Your Database Connection Failed ")
-        print({error})
+        print(error)
     app.run(debug=True)
