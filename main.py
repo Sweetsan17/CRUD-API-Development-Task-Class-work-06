@@ -167,6 +167,30 @@ def delete_student(id):
     return jsonify({"message": "Where Student id={id} is Deleted Successfully "}), 201
 
 
+# COURSES
+# POST METHOD FOR SEND COURSES DETAILS
+@app.route("/api/courses", methods=["POST"])
+def create_course():
+    data = request.get_json()
+    # validation for course
+    if not data:
+        return jsonify({"message": "you must put your data"}), 400
+    elif not data.get("course_title"):
+        return jsonify({"message": "Course Title is Required"}), 400
+    else:
+        existing_course_title = Course.query.filter_by(email=data["email"]).first()
+    if existing_course_title:
+        return jsonify({"message": "Course Title Already Existed"}), 401
+    elif not data.get("course_fee"):
+        return jsonify({"message": "Course Fee is Required"}), 400
+    elif not data.get("duration_month"):
+        return jsonify({"message": "Duration Month is Required"}), 400
+    elif not data.get("description"):
+        return jsonify({"message": "Description is Required"}), 400
+    elif not data.get("is_available"):
+        return jsonify({"message": "Is Available is Required"}), 400
+
+
 if __name__ == "__main__":
     try:
         with app.app_context():
