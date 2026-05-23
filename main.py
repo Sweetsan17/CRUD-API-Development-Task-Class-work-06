@@ -154,6 +154,19 @@ def update_student(id):
     )
 
 
+# DELETE METHOD ROUTE - delete student details
+@app.route("/api/students/<int:id>", methods=["DELETE"])
+def delete_student(id):
+    student = Student.query.get(id)
+    # validation check if any existed data or not existed in students
+    if not student:
+        return jsonify({"message": "Student Not Found"}), 404
+    db.session.delete(student)
+    db.session.commit()
+
+    return jsonify({"message": "Where Student id={id} is Deleted Successfully "}), 201
+
+
 if __name__ == "__main__":
     try:
         with app.app_context():
