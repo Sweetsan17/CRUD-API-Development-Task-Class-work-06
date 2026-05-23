@@ -23,3 +23,15 @@ class Student(db.Model):
     is_active = db.Column(db.Boolean, Default=True)
     joined_date = db.Column(db.Date, nullable=False)
     created_at = db.Column(db.DateTime, Default=datetime.utcnow)
+
+
+class Course(db.Model):
+    __tablename__ = "courses"
+
+    id = db.Column(db.Integer, Primary_key=True, AutoIncrement=True)
+    course_title = db.Column(db.String(100), nullable=False, unique=True)
+    course_fee = db.Column(db.Float, nullable=False)
+    duration_month = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    is_available = db.Column(db.Boolean, Default=True)
+    created_at = db.Column(db.DateTime, Default=datetime.utcnow)
