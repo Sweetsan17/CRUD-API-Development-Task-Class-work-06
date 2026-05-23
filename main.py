@@ -172,35 +172,40 @@ def delete_student(id):
 @app.route("/api/courses", methods=["POST"])
 def create_course():
     data = request.get_json()
-    # validation for course
-    if not data:
-        return jsonify({"message": "you must put your data"}), 400
-    elif not data.get("course_title"):
-        return jsonify({"message": "Course Title is Required"}), 400
-    else:
-        existing_course_title = Course.query.filter_by(
-            course_title=data["course_title"]
-        ).first()
-    if existing_course_title:
-        return jsonify({"message": "Course Title Already Existed"}), 401
-    elif not data.get("course_fee"):
-        return jsonify({"message": "Course Fee is Required"}), 400
-    elif not data.get("duration_month"):
-        return jsonify({"message": "Duration Month is Required"}), 400
-    elif not data.get("description"):
-        return jsonify({"message": "Description is Required"}), 400
-    elif not data.get("is_available"):
-        return jsonify({"message": "Is Available is Required"}), 400
 
+    # Validation
+    if not data:
+        return jsonify({"message": "Please send course data"}), 400
+
+    elif not data.get("course_title"):
+        return jsonify({"message": "Course title is required"}), 400
+
+    elif not data.get("course_duration"):
+        return jsonify({"message": "Course duration is required"}), 400
+
+    elif not data.get("course_fee"):
+        return jsonify({"message": "Course fee is required"}), 400
+
+    # Check duplicate course title
+    existing_course = Course.query.filter_by(course_title=data["course_title"]).first()
+
+    if existing_course:
+        return jsonify({"message": "Course already exists"}), 409
+
+    # Create new course
     new_course = Course(
         course_title=data["course_title"],
+        course_duration=data["course_duration"],
         course_fee=data["course_fee"],
-        duration_month=data["duration_month"],
-        description=data["description"],
-        is_available=data["is_available"],
     )
+
     db.session.add(new_course)
     db.session.commit()
+
+    return (
+        jsonify({"message": "Course created successfully"}),
+        201,
+    )
 
 
 if __name__ == "__main__":
