@@ -68,7 +68,7 @@ def create_students():
     )
 
 
-if __name__ == "__Main__":
+if __name__ == "__main__":
     try:
         with app.app_context():
             db.session.execute(text("SELECT 1"))
