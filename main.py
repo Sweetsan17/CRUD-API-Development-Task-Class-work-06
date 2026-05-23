@@ -146,7 +146,12 @@ def update_student(id):
     student.joined_date = data["joined_date"]
 
     db.session.commit()
-    return jsonify({"message": "Student Full Name is Updated"}), 201
+    return (
+        jsonify(
+            {"message": "Student Full Name , Age, Cgpa and  Joined Date are Updated"}
+        ),
+        201,
+    )
 
 
 if __name__ == "__main__":
