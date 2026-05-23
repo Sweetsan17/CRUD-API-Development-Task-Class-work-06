@@ -132,9 +132,18 @@ def update_student(id):
     # read the data and request the data in thunder client
     data = request.json
 
-    if not data.get("full_name"):
-        return jsonify({"message": "Full Name Is Required"}), 400
+    if not data.get("age"):
+        return jsonify({"message": "Age Is Required"}), 400
+
+    if not data.get("cgpa"):
+        return jsonify({"message": "Cgpa Is Required"}), 400
+
+    if not data.get("joined_date"):
+        return jsonify({"message": "Joined_date Is Required"}), 400
     student.full_name = data["full_name"]
+    student.age = data["age"]
+    student.cgpa = data["cgpa"]
+    student.joined_date = data["joined_date"]
 
     db.session.commit()
     return jsonify({"message": "Student Full Name is Updated"}), 201
