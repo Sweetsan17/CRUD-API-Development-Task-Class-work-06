@@ -102,6 +102,26 @@ def get_students():
         return jsonify(details)
 
 
+# Read Specific Student details
+@app.route("/api/students/<int:id>", methods=["GET"])
+def get_student(id):
+    student = Student.query.get(id)
+    # validation check if any existed data or not existed in students
+    if not student:
+        return jsonify({"message": "Student Not Found"}), 404
+
+    return jsonify(
+        {
+            "id": student.id,
+            "full_name": student.full_name,
+            "email": student.email,
+            "age": student.age,
+            "cgpa": student.cgpa,
+            "joined_date": student.joined_date,
+        }
+    )
+
+
 if __name__ == "__main__":
     try:
         with app.app_context():
