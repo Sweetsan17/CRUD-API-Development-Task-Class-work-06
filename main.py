@@ -49,9 +49,14 @@ def create_students():
     if not data or not data.get("full_name"):
         return jsonify({"message": "Full_Name is Required"}), 400
 
-    if not data.get("email") or not data.get("age") or not data.get("joined_date"):
-        return jsonify({"message": "Email and Age and Joined_Date are Required"}), 400
+    if not data.get("email"):
+        return jsonify({"message": "Email is required"}), 400
 
+    if "age" not in data:
+        return jsonify({"message": "Age is required"}), 400
+
+    if not data.get("joined_date"):
+        return jsonify({"message": "Joined Date is required"}), 400
     new_student = Student(
         full_name=data["full_name"],
         email=data["email"],
