@@ -88,16 +88,16 @@ def create_students():
 def get_students():
     students = Student.query.all()
     details = []
-    for Student in students:
+    for student in students:
         details.append(
             {
-                "id": Student.id,
-                "full_name": Student.full_name,
-                "email": Student.email,
-                "age": Student.age,
-                "cgpa": Student.cgpa,
-                "is_active": Student.is_active,
-                "joined_date": Student.joined_date,
+                "id": student.id,
+                "full_name": student.full_name,
+                "email": student.email,
+                "age": student.age,
+                "cgpa": student.cgpa,
+                "is_active": student.is_active,
+                "joined_date": student.joined_date,
             }
         )
         return jsonify(details)
