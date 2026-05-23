@@ -46,17 +46,26 @@ class Course(db.Model):
 def create_students():
     data = request.get_json()
     # Add the validation for nullable=false
-    if not data or not data.get("full_name"):
-        return jsonify({"message": "Full_Name is Required"}), 400
+    if not data:
+        return jsonify({"message": "you must put your data"}), 400
 
-    if not data.get("email"):
+    elif not data.get("full_name"):
+        return jsonify({"message": "Full Name is Required"}), 400
+
+    elif not data.get("email"):
         return jsonify({"message": "Email is required"}), 400
 
-    if "age" not in data:
+    elif "age" not in data:
         return jsonify({"message": "Age is required"}), 400
 
-    if not data.get("joined_date"):
+    elif not data.get("joined_date"):
         return jsonify({"message": "Joined Date is required"}), 400
+    # Unique Email validation
+    else:
+        existing_email = Student.query.filter_by(email=data["email"]).first()
+        if existing_email:
+            return jsonify({"message": "This Email Already Existed"}), 401
+
     new_student = Student(
         full_name=data["full_name"],
         email=data["email"],
