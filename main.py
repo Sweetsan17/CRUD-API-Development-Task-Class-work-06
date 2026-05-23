@@ -48,16 +48,17 @@ def create_students():
     # Add the validation for nullable=false
     if not data or not data.get("full_name"):
         return jsonify({"message": "Full_Name is Required"}), 400
+
     if not data.get("email") or not data.get("age") or not data.get("joined_date"):
         return jsonify({"message": "Email and Age and Joined_Date are Required"}), 400
+
     new_student = Student(
         full_name=data["full_name"],
         email=data["email"],
         age=data["age"],
-        cgpa=data["cgpa", 0.0],
-        is_active=data["is_active", True],
-        joined_date=datetime.strptime(data=["joined_date"]).date(),
-        created_at=data["created_at"],
+        cgpa=data.get("cgpa", 0.0),
+        is_active=data.get("is_active", True),
+        joined_date=datetime.strptime(data["joined_date"], "%Y-%m-%d").date(),
     )
     db.session.add(new_student)
     db.session.commit()
