@@ -41,7 +41,7 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-# POST METHOD ROUTES- CREATE THE STUDENTS AND COURSES DETAILS
+# POST METHOD ROUTES- CREATE THE STUDENTS DETAILS
 @app.route("/api/students", methods=["POST"])
 def create_students():
     data = request.get_json()
@@ -81,6 +81,26 @@ def create_students():
         jsonify({"message": "New Student Created Success", "id": new_student.id}),
         201,
     )
+
+
+#  GET METHOD ROUTE - Read students details
+@app.route("/api/students", methods=["GET"])
+def get_students():
+    students = Student.query.all()
+    details = []
+    for Student in students:
+        details.append(
+            {
+                "id": Student.id,
+                "full_name": Student.full_name,
+                "email": Student.email,
+                "age": Student.age,
+                "cgpa": Student.cgpa,
+                "is_active": Student.is_active,
+                "joined_date": Student.joined_date,
+            }
+        )
+        return jsonify(details)
 
 
 if __name__ == "__main__":
