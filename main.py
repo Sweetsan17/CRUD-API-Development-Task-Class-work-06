@@ -122,6 +122,24 @@ def get_student(id):
     )
 
 
+# PUT METHOD ROUTE- Update Student Details
+@app.route("/api/students/<int:id>", methods=["PUT"])
+def update_student(id):
+    student = Student.query.get(id)
+    # validation check if any existed data or not existed in students
+    if not student:
+        return jsonify({"message": "Student Not Found"}), 404
+    # read the data and request the data in thunder client
+    data = request.json
+
+    if not data.get("full_name"):
+        return jsonify({"message": "Full Name Is Required"}), 400
+    student.full_name = data["full_name"]
+
+    db.session.commit()
+    return jsonify({"message": "Student Full Name is Updated"}), 201
+
+
 if __name__ == "__main__":
     try:
         with app.app_context():
