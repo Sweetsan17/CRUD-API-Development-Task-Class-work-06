@@ -178,7 +178,9 @@ def create_course():
     elif not data.get("course_title"):
         return jsonify({"message": "Course Title is Required"}), 400
     else:
-        existing_course_title = Course.query.filter_by(email=data["email"]).first()
+        existing_course_title = Course.query.filter_by(
+            course_title=data["course_title"]
+        ).first()
     if existing_course_title:
         return jsonify({"message": "Course Title Already Existed"}), 401
     elif not data.get("course_fee"):
@@ -189,6 +191,16 @@ def create_course():
         return jsonify({"message": "Description is Required"}), 400
     elif not data.get("is_available"):
         return jsonify({"message": "Is Available is Required"}), 400
+
+    new_course = Course(
+        course_title=data["course_title"],
+        course_fee=data["course_fee"],
+        duration_month=data["duration_month"],
+        description=data["description"],
+        is_available=data["is_available"],
+    )
+    db.session.add(new_course)
+    db.session.commit()
 
 
 if __name__ == "__main__":
