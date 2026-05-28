@@ -24,6 +24,7 @@ def get_students():
             "id": s.id,
             "full_name": s.full_name,
             "email": s.email,
+            "age": s.age,
             "joined_date": str(s.joined_date),
         }
         for s in students
@@ -38,6 +39,7 @@ def get_student(id):
             "id": student.id,
             "full_name": student.full_name,
             "email": student.email,
+            "age": student.age,
             "joined_date": str(student.joined_date),
         }
     )
