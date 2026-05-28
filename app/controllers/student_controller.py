@@ -49,6 +49,7 @@ def update_student(id):
     student = Student.query.get_or_404(id)
     data = request.get_json()
     student.full_name = data.get("full_name", student.full_name)
+    student.age = data.get("age", student.age)
     db.session.commit()
     return jsonify({"message": "Student updated"})
 
