@@ -42,3 +42,12 @@ def get_course(id):
             "duration_month": course.duration_month,
         }
     )
+
+
+def update_course(id):
+    course = Course.query.get_or_404(id)
+    data = request.get_json()
+    course.course_title = data.get("course_title", course.course_title)
+    course.course_fee = data.get("course_fee", course.course_fee)
+    db.session.commit()
+    return jsonify({"message": f"Course Updated Id={id}"})
