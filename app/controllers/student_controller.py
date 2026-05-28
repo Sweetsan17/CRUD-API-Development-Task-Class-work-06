@@ -51,11 +51,11 @@ def update_student(id):
     student.full_name = data.get("full_name", student.full_name)
     student.age = data.get("age", student.age)
     db.session.commit()
-    return jsonify({"message": "Student updated"})
+    return jsonify({"message": "Student updated"}), 201
 
 
 def delete_student(id):
     student = Student.query.get_or_404(id)
     db.session.delete(student)
     db.session.commit()
-    return jsonify({"message": "Student deleted"})
+    return jsonify({"message": "Student deleted"}), 201
