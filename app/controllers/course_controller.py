@@ -30,3 +30,15 @@ def get_courses():
         for c in courses
     ]
     return jsonify(result)
+
+
+def get_course(id):
+    course = Course.query.get_or_404(id)
+    return jsonify(
+        {
+            "id": course.id,
+            "course_title": course.course_title,
+            "course_fee": course.course_fee,
+            "duration_month": course.duration_month,
+        }
+    )
