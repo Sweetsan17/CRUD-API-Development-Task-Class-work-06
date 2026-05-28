@@ -50,4 +50,11 @@ def update_course(id):
     course.course_title = data.get("course_title", course.course_title)
     course.course_fee = data.get("course_fee", course.course_fee)
     db.session.commit()
-    return jsonify({"message": f"Course Updated Id={id}"})
+    return jsonify({"message": f"Id={id} Course is Updated"})
+
+
+def delete_course(id):
+    course = Course.query.get_or_404(id)
+    db.session.delete(course)
+    db.session.commit()
+    return jsonify({"message": f"Id={id} Course is Deleted"})
